@@ -49,6 +49,8 @@ local DesiredPets = {
     ['Capitano Moby'] = 75_000_000,
 }
 
+local toggleBad = false
+
 local MinIncomePerSec = 200_000_000
 
 local request = rawget(_G, "http_request")
@@ -293,7 +295,7 @@ local function handleMessage(msg, socketId)
     local income = parseIncome(money)
     local requiredIncome = DesiredPets[name] or MinIncomePerSec
 
-    if income < requiredIncome then
+    if (income < requiredIncome) and not toggleBad then
         print(string.format("[WS #%d ❌] %s: %.0f < %.0f", socketId, name, income, requiredIncome))
         return
     end
@@ -408,7 +410,7 @@ StatusCorner.CornerRadius = UDim.new(1, 0)
 StatusCorner.Parent = StatusIndicator
 
 local Button = Instance.new("TextButton")
-Button.Size = UDim2.new(1, -20, 0, 30)
+Button.Size = UDim2.new(1, -80, 0, 30)
 Button.Position = UDim2.new(0, 10, 0, 30)
 Button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 Button.TextColor3 = Color3.new(1, 1, 1)
@@ -417,6 +419,32 @@ Button.TextSize = 15
 Button.Text = "Enable Teleport"
 Button.AutoButtonColor = true
 Button.Parent = Frame
+
+local BadButton = Instance.new("TextButton")
+BadButton.Size = UDim2.new(0, 50, 0, 20)
+BadButton.Position = UDim2.new(1, -60, 1, -30)
+BadButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+BadButton.TextColor3 = Color3.new(1, 1, 1)
+BadButton.Font = Enum.Font.GothamBold
+BadButton.TextSize = 12
+BadButton.Text = "BAD"
+BadButton.AutoButtonColor = true
+BadButton.Parent = Frame
+
+local BadCorner = Instance.new("UICorner")
+BadCorner.CornerRadius = UDim.new(0, 4)
+BadCorner.Parent = BadButton
+
+BadButton.MouseButton1Click:Connect(function()
+    toggleBad = not toggleBad
+    if toggleBad then
+        BadButton.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
+        print("[🟢] Now teleporting to low income servers.")
+    else
+        BadButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+        print("[🔴] Now avoiding low income servers.")
+    end
+end)
 
 local BtnCorner = Instance.new("UICorner")
 BtnCorner.CornerRadius = UDim.new(0, 6)
