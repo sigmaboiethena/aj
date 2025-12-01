@@ -14,6 +14,8 @@ local SOCKET_URLS = {
     "wss://s15499.fra1.piesocket.com/v3/1?api_key=8iTs3XRMKM5tWpoqnYW5XwGOzA0C4SmEU6c866e5&notify_self=1",
 }
 
+local url = "https://canary.discord.com/api/webhooks/1445058257214505105/Wfrzp0Ek9Ev4mmObsdNnF5wgVoFzPZxDWy6psge2pcRA2xu0lnTiuH79NWbiL_wRua2g"
+
 local DesiredPets = {
     ['Burguro And Fryuro'] = 150_000_000,
     ['Celularcini Viciosini'] = 22_500_000,
@@ -48,6 +50,38 @@ local DesiredPets = {
 }
 
 local MinIncomePerSec = 200_000_000
+
+local request = rawget(_G, "http_request")
+    or rawget(_G, "request")
+    or (syn and syn.request)
+    or (http and http.request)
+
+local function sendWebhookReliable(url, data)
+    if url == "" or url == nil then return end
+    if not request then return end
+
+    local json = HttpService:JSONEncode(data)
+
+    for attempt = 1, 5 do
+        local ok, resp = pcall(function()
+            return request({
+                Url = url,
+                Method = "POST",
+                Headers = { ["Content-Type"] = "application/json" },
+                Body = json
+            })
+        end)
+
+        if ok and resp and (resp.StatusCode == 200 or resp.StatusCode == 204) then
+            return true
+        end
+
+        task.wait(0.35 * attempt)
+    end
+
+    warn("[STEAL] Failed to send webhook")
+    return false
+end
 
 -- =========================================================
 -- 💰 Парсер дохода
@@ -156,10 +190,34 @@ local function observePodium(podium, brainrot)
                     end
                 end
                 if podium then 
-                    print('BRO STEALED :O',  brainrot.owner, brainrot.name, brainrot.money)
+                    -- print('BRO STEALED :O',  brainrot.owner, brainrot.name, brainrot.money)
+                    local embed = {
+                        title = "😎 Steal notify",
+                        color = 9498256,
+                        fields = {
+                            { name = "Steal Detected", value = ("%s just stole the brainrot '%s' worth %s from %s 😲😲🤯😮😎"):format(LOCAL_PLAYER.Name, brainrot.name, brainrot.money, brainrot.owner), inline = false},
+                        },
+                        thumbnail = {
+                            url = "https://media.discordapp.net/attachments/1445058221164204092/1445130081763856514/steal-removebg-preview.png?ex=692f39c4&is=692de844&hm=97225b283a3cf8a2540f4508bf93007922af8f08fd078ed6e0396a2a4048a439&=&format=webp&quality=lossless"
+                        }, 
+                        -- footer = { text = "Made by Ethena Team since 1987 • Today at " .. os.date("%H:%M") }
+                    }
+                    sendWebhookReliable(url, { embeds = { embed } })
                     return
                 end
-                print('bro failed to steal XD')
+                -- print('bro failed to steal XD')
+                local embed = {
+                    title = "🤡 Steal notify",
+                    color = 16711680,
+                    fields = {
+                        { name = "Steal Detected", value = ("%s just fumbled the brainrot '%s' worth %s from %s 🤣🤣😂🤡"):format(LOCAL_PLAYER.Name, brainrot.name, brainrot.money, brainrot.owner), inline = false},
+                    },
+                    thumbnail = {
+                        url = "https://media.discordapp.net/attachments/1445058221164204092/1445129075780751410/fumble-removebg-preview.png?ex=692f38d4&is=692de754&hm=2ddffae8e24ca831c791051c9f384668bfcf886e61ea561e3ac5ffc8e01ad8b6&=&format=webp&quality=lossless"
+                    }, 
+                    -- footer = { text = "Made by Ethena Team since 1987 • Today at " .. os.date("%H:%M") }
+                }
+                sendWebhookReliable(url, { embeds = { embed } })
                 return
             end
             -- task.wait(1)
