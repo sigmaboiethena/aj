@@ -266,7 +266,7 @@ local function connectToWebSocket(url, i)
     local ok, ws = pcall(function() return WebSocket.connect(url) end)
     if ok and ws then
         sockets[i] = ws
-        print(string.format("[WS #%d] ✅ Connected to websocket: %s", i, url))
+        print(string.format("[WS #%d] ✅ Connected to websocket", i))
         ws.OnMessage:Connect(function(msg)
             handleMessage(msg, i)
         end)
