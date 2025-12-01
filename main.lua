@@ -260,12 +260,18 @@ local TeleportEnabled = false
 local function teleportLoop()
     if isTeleporting then return end
     isTeleporting = true
+    local tries = 0
     while TeleportEnabled and currentJobId do
         local ok, err = pcall(function()
             TeleportService:TeleportToPlaceInstance(game.PlaceId, currentJobId, LOCAL_PLAYER)
         end)
         if not ok then warn("[Teleport] ❌ Teleport Failed:", err) end
         task.wait(0.1)
+        tries = tries + 1
+        if tries >= 100 then
+            print("[Teleport] ⚠️ Teleport timed out, (100 ATTS).")
+            break
+        end
     end
     isTeleporting = false
 end
