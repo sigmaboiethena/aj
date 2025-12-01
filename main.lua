@@ -300,12 +300,23 @@ local function handleMessage(msg, socketId)
         print("💰 Income:", money)
         print("👥 Players:", players)
         print("🧩 Job ID:", jobid)
-        print('😱 Owner:', data.owner or 'Unknown')
+        print('😱 Owner:', data.owner or 'Unknown Von')
         print("===================================")
         if TeleportEnabled then
             task.spawn(teleportLoop)
             task.spawn(function()
-                stealChecker(name, money, data.owner or 'Unknown')
+                local found = false
+                for i = 0, 20 do
+                    if game.JobId ~= jobid then
+                        task.wait(0.5)
+                    else
+                        found = true
+                        break
+                    end
+                end
+                if found then
+                    stealChecker(name, money, data.owner or 'Unknown')
+                end
             end)
         else
             print("[⏸️] Teleporting disabled.")
