@@ -268,8 +268,8 @@ local function teleportLoop()
         if not ok then warn("[Teleport] ❌ Teleport Failed:", err) end
         task.wait(0.1)
         tries = tries + 1
-        if tries >= 100 then
-            print("[Teleport] ⚠️ Teleport timed out, (100 ATTS).")
+        if tries >= 500 then
+            print("[Teleport] ⚠️ Teleport timed out, (500 ATTS).")
             break
         end
     end
