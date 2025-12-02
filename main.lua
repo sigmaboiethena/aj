@@ -21,7 +21,7 @@ brainrotInfo.BackgroundTransparency = 1
 brainrotInfo.AnchorPoint = Vector2.new(0.5, 0)
 brainrotInfo.Position = UDim2.new(0.5, 0, 0, 20)
 brainrotInfo.Size = UDim2.new(0, 300, 0, 40)
-brainrotInfo.Visible = true
+brainrotInfo.Visible = false
 
 local brainrotInfoStroke = Instance.new("UIStroke")
 brainrotInfoStroke.Thickness = 2
@@ -512,12 +512,16 @@ BtnCorner.Parent = Button
 Button.MouseButton1Click:Connect(function()
     TeleportEnabled = not TeleportEnabled
     if TeleportEnabled then
+        brainrotInfo.Visible = true
+
         Button.Text = "Disable Teleport"
         Button.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
         StatusIndicator.BackgroundColor3 = Color3.fromRGB(60, 255, 100)
         print("[🟢] Autojoiner active.")
         task.spawn(teleportLoop)
     else
+        brainrotInfo.Visible = false
+
         Button.Text = "Enable Teleport"
         Button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
         StatusIndicator.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
