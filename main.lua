@@ -251,27 +251,27 @@ local function stealChecker(name, money, owner)
     observePodium(tPodium, {name = name, money = money, owner = owner})
 end
 
-Players.PlayerAdded:Connect(function(player)
-    if player ~= LOCAL_PLAYER then
-        return
-    end
+-- Players.PlayerAdded:Connect(function(player)
+--     if player ~= LOCAL_PLAYER then
+--         return
+--     end
 
-    if not isfile('stealnotify.json') then 
-        return 
-    end
+--     if not isfile('stealnotify.json') then 
+--         return 
+--     end
 
-    local content = readfile('stealnotify.json')
-    local success, data = pcall(function() return HttpService:JSONDecode(content) end)
-    if not success or type(data) ~= "table" then
-        warn("[STEAL] ⚠️ Error reading stealnotify.json")
-        return
-    end
+--     local content = readfile('stealnotify.json')
+--     local success, data = pcall(function() return HttpService:JSONDecode(content) end)
+--     if not success or type(data) ~= "table" then
+--         warn("[STEAL] ⚠️ Error reading stealnotify.json")
+--         return
+--     end
 
-    if game.JobId ~= data.jobid then
-        return
-    end
-    stealChecker(data.name, data.money, data.owner)
-end)
+--     if game.JobId ~= data.jobid then
+--         return
+--     end
+--     stealChecker(data.name, data.money, data.owner)
+-- end)
 
 
 -- =========================================================
