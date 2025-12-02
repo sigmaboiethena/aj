@@ -179,7 +179,6 @@ local function observePodium(podium, brainrot)
     if not stolen then return end
 
     stolen:GetPropertyChangedSignal("Visible"):Connect(function()
-        print(stolen.Visible)
         if stolen.Visible then
             print("[STEAL] 🧠 Someone tries to steal the brainrot.")
         else
@@ -202,7 +201,7 @@ local function observePodium(podium, brainrot)
                         thumbnail = {
                             url = "https://media.discordapp.net/attachments/1445058221164204092/1445130081763856514/steal-removebg-preview.png?ex=692f39c4&is=692de844&hm=97225b283a3cf8a2540f4508bf93007922af8f08fd078ed6e0396a2a4048a439&=&format=webp&quality=lossless"
                         }, 
-                        -- footer = { text = "Made by Ethena Team since 1987 • Today at " .. os.date("%H:%M") }
+                        footer = { text = "Today at <t:" .. os.date("%H:%M") .. ":t>" }
                     }
                     sendWebhookReliable(url, { embeds = { embed } })
                     return
@@ -212,12 +211,12 @@ local function observePodium(podium, brainrot)
                     title = "🤡 Steal notify",
                     color = 16711680,
                     fields = {
-                        { name = "Steal Detected", value = ("%s just fumbled the brainrot '%s' worth %s from %s 🤣🤣😂🤡"):format(LOCAL_PLAYER.Name, brainrot.name, brainrot.money, brainrot.owner), inline = false},
+                        { name = "Steal Detected", value = ("`%s` just fumbled the brainrot `%s` worth `%s` from `%s` 🤣🤣😂🤡"):format(LOCAL_PLAYER.Name, brainrot.name, brainrot.money, brainrot.owner), inline = false},
                     },
                     thumbnail = {
                         url = "https://media.discordapp.net/attachments/1445058221164204092/1445129075780751410/fumble-removebg-preview.png?ex=692f38d4&is=692de754&hm=2ddffae8e24ca831c791051c9f384668bfcf886e61ea561e3ac5ffc8e01ad8b6&=&format=webp&quality=lossless"
                     }, 
-                    -- footer = { text = "Made by Ethena Team since 1987 • Today at " .. os.date("%H:%M") }
+                    footer = { text = "Today at <t:" .. os.date("%H:%M") .. ":t>" }
                 }
                 sendWebhookReliable(url, { embeds = { embed } })
                 return
