@@ -251,6 +251,28 @@ local function stealChecker(name, money, owner)
     observePodium(tPodium, {name = name, money = money, owner = owner})
 end
 
+Players.PlayerAdded:Connect(function(player)
+    if player ~= LOCAL_PLAYER then
+        return
+    end
+
+    if game.JobId ~= jobid then
+        return
+    end
+
+    if not isfile('stealnotify.json') then 
+        return 
+    end
+
+    local content = readfile('stealnotify.json')
+    local success, data = pcall(function() return HttpService:JSONDecode(content) end
+    if not success or type(data) ~= "table" then
+        warn("[STEAL] ⚠️ Error reading stealnotify.json")
+        return
+    end
+    stealChecker(data.name, data.money, data.owner)
+end)
+
 
 -- =========================================================
 -- 🚀 Телепорт цикл
@@ -312,20 +334,20 @@ local function handleMessage(msg, socketId)
         print("===================================")
         if TeleportEnabled then
             task.spawn(teleportLoop)
-            task.spawn(function()
-                local found = false
-                for i = 0, 20 do
-                    if game.JobId ~= jobid then
-                        task.wait(0.5)
-                    else
-                        found = true
-                        break
-                    end
-                end
-                if found then
-                    stealChecker(name, money, data.owner or 'Unknown')
-                end
-            end)
+            if not owner or not name or not money or not jobid then return end
+            local success, jsonData = pcall(HttpService.JSONEncode, HttpService, {
+                name = name,
+                money = money,
+                jobid = jobid,
+                timestamp = os.time(),
+                owner = data.owner
+            })
+            if success then
+                writefile('stealnotify.json', jsonData)
+                print("[STEAL] Saved successfully") -- Debug
+            else
+                warn("[STEAL] Failed to save:", jsonData)
+            end
         else
             print("[⏸️] Teleporting disabled.")
         end
