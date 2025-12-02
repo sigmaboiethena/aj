@@ -248,7 +248,7 @@ local function stealChecker(name, money, owner)
         if found then 
             break
         end
-        task.wait(0.5)
+        task.wait(1.5)
     end
 
     if not tPodium then
