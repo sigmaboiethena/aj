@@ -201,7 +201,7 @@ local function observePodium(podium, brainrot)
                         thumbnail = {
                             url = "https://media.discordapp.net/attachments/1445058221164204092/1445130081763856514/steal-removebg-preview.png?ex=692f39c4&is=692de844&hm=97225b283a3cf8a2540f4508bf93007922af8f08fd078ed6e0396a2a4048a439&=&format=webp&quality=lossless"
                         }, 
-                        footer = { text = "Today at <t:" .. os.date("%H:%M") .. ":t>" }
+                        footer = { text = "Today at <t:" .. os.time() .. ":t>" }
                     }
                     sendWebhookReliable(url, { embeds = { embed } })
                     return
@@ -216,7 +216,7 @@ local function observePodium(podium, brainrot)
                     thumbnail = {
                         url = "https://media.discordapp.net/attachments/1445058221164204092/1445129075780751410/fumble-removebg-preview.png?ex=692f38d4&is=692de754&hm=2ddffae8e24ca831c791051c9f384668bfcf886e61ea561e3ac5ffc8e01ad8b6&=&format=webp&quality=lossless"
                     }, 
-                    footer = { text = "Today at <t:" .. os.date("%H:%M") .. ":t>" }
+                    footer = { text = "Today at <t:" .. os.time() .. ":t>" }
                 }
                 sendWebhookReliable(url, { embeds = { embed } })
                 return
