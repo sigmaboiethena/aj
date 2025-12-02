@@ -252,6 +252,7 @@ local function stealChecker(name, money, owner)
 end
 
 local function checkSteal()
+    task.wait(1)
     if not isfile('stealnotify.json') then 
         print("[STEAL] ⚠️ stealnotify.json not found")
         return 
