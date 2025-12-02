@@ -256,18 +256,18 @@ Players.PlayerAdded:Connect(function(player)
         return
     end
 
-    if game.JobId ~= jobid then
-        return
-    end
-
     if not isfile('stealnotify.json') then 
         return 
     end
 
     local content = readfile('stealnotify.json')
-    local success, data = pcall(function() return HttpService:JSONDecode(content) end
+    local success, data = pcall(function() return HttpService:JSONDecode(content) end)
     if not success or type(data) ~= "table" then
         warn("[STEAL] ⚠️ Error reading stealnotify.json")
+        return
+    end
+
+    if game.JobId ~= data.jobid then
         return
     end
     stealChecker(data.name, data.money, data.owner)
@@ -334,7 +334,7 @@ local function handleMessage(msg, socketId)
         print("===================================")
         if TeleportEnabled then
             task.spawn(teleportLoop)
-            if not owner or not name or not money or not jobid then return end
+            if not data.owner or not name or not money or not jobid then return end
             local success, jsonData = pcall(HttpService.JSONEncode, HttpService, {
                 name = name,
                 money = money,
