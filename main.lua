@@ -232,15 +232,23 @@ end
 
 local function stealChecker(name, money, owner)
     local tPodium = nil
-    for _, base in ipairs(workspace:WaitForChild("Plots"):GetChildren()) do
-        -- print('checking base ', base.Name, ' for owner ', owner, ' brainrot ', name, ' money ', money)
-        local podium = scanBase(base, owner, name, money)
+    local found = false
+    for i = 0, 4 do
+        for _, base in ipairs(workspace:WaitForChild("Plots"):GetChildren()) do
+            -- print('checking base ', base.Name, ' for owner ', owner, ' brainrot ', name, ' money ', money)
+            local podium = scanBase(base, owner, name, money)
 
-        if podium then
-            print(string.format("[STEAL] 🧠 Found Brainrot Podium - %s in base owned by %s", name, owner))
-            tPodium = podium
+            if podium then
+                print(string.format("[STEAL] 🧠 Found Brainrot Podium - %s in base owned by %s", name, owner))
+                tPodium = podium
+                found = true
+                break
+            end
+        end
+        if found then 
             break
         end
+        task.wait(0.5)
     end
 
     if not tPodium then
