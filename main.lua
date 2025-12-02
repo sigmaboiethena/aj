@@ -270,11 +270,11 @@ local function checkSteal()
     stealChecker(data.name, data.money, data.owner)
 end
 
-local connection
-connection = LOCAL_PLAYER.CharacterAdded:Connect(function(character)
-    checkSteal()
-    connection:Disconnect()
-end)
+-- local connection
+-- connection = LOCAL_PLAYER.CharacterAdded:Connect(function(character)
+--     checkSteal()
+--     connection:Disconnect()
+-- end)
 
 
 -- =========================================================
@@ -490,3 +490,5 @@ Button.MouseButton1Click:Connect(function()
         print("[🔴] Autojoiner disabled.")
     end
 end)
+
+task.spawn(checkSteal)
