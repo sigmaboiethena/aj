@@ -7,6 +7,27 @@ local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local LOCAL_PLAYER = Players.LocalPlayer or Players.PlayerAdded:Wait()
 
+local PlayerGui = LOCAL_PLAYER:WaitForChild("PlayerGui")
+local ScreenGui = Instance.new("ScreenGui")
+
+local brainrotInfo = Instance.new("TextLabel")
+brainrotInfo.Name = "brainrotInfo"
+brainrotInfo.Parent = ScreenGui
+brainrotInfo.Text = "Waiting for brainrot to auto join..."
+brainrotInfo.Font = Enum.Font.GothamBold
+brainrotInfo.TextSize = 35
+brainrotInfo.TextColor3 = Color3.fromRGB(255, 0, 0)
+brainrotInfo.BackgroundTransparency = 1
+brainrotInfo.AnchorPoint = Vector2.new(0.5, 0)
+brainrotInfo.Position = UDim2.new(0.5, 0, 0, 20)
+brainrotInfo.Size = UDim2.new(0, 300, 0, 40)
+brainrotInfo.Visible = true
+
+local brainrotInfoStroke = Instance.new("UIStroke")
+brainrotInfoStroke.Thickness = 2
+brainrotInfoStroke.Color = Color3.fromRGB(0, 0, 0)
+brainrotInfoStroke.Parent = brainrotInfo
+
 -- =========================================================
 -- ⚙️ Настройки
 -- =========================================================
@@ -311,6 +332,8 @@ local function teleportLoop()
         end
     end
     isTeleporting = false
+    brainrotInfo.Text = "Waiting for brainrot to auto join..."
+    brainrotInfo.TextColor3 = Color3.fromRGB(255, 0, 0)
 end
 
 -- =========================================================
@@ -346,6 +369,9 @@ local function handleMessage(msg, socketId)
         print('😱 Owner:', data.owner or 'Unknown Von')
         print("===================================")
         if TeleportEnabled then
+            brainrotInfo.Visible = true
+            brainrotInfo.Text = name
+            brainrotInfo.TextColor3 = Color3.fromRGB(0, 255, 0)
             task.spawn(teleportLoop)
             if not data.owner or not name or not money or not jobid then return end
             local success, jsonData = pcall(HttpService.JSONEncode, HttpService, {
@@ -401,8 +427,6 @@ end
 -- =========================================================
 -- 🖥️ Новый GUI (правый верхний угол)
 -- =========================================================
-local PlayerGui = LOCAL_PLAYER:WaitForChild("PlayerGui")
-local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "TeleportGUI_Joiner"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.IgnoreGuiInset = true
