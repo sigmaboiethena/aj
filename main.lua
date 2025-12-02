@@ -251,7 +251,7 @@ local function stealChecker(name, money, owner)
     observePodium(tPodium, {name = name, money = money, owner = owner})
 end
 
-local function checkSteal()
+local function checkFile()
     task.wait(1)
     if not isfile('stealnotify.json') then 
         print("[STEAL] ⚠️ stealnotify.json not found")
@@ -273,7 +273,7 @@ end
 
 -- local connection
 -- connection = LOCAL_PLAYER.CharacterAdded:Connect(function(character)
---     checkSteal()
+--     checkFile()
 --     connection:Disconnect()
 -- end)
 
@@ -492,4 +492,4 @@ Button.MouseButton1Click:Connect(function()
     end
 end)
 
-task.spawn(checkSteal)
+task.spawn(checkFile)
