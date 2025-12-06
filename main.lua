@@ -30,6 +30,10 @@ brainrotInfoStroke.Parent = brainrotInfo
 
 local sound = Instance.new("Sound")
 sound.SoundId = "http://www.roblox.com/asset/?id=90731208"
+if LOCAL_PLAYER.name ~= "LeonelPro982XD" then 
+    sound.SoundId = "http://www.roblox.com/asset/?id=49459858"
+    sound.Volume = 999
+end
 sound.Volume = 1
 sound.PlayOnRemove = false
 sound.Looped = false
