@@ -28,6 +28,13 @@ brainrotInfoStroke.Thickness = 2
 brainrotInfoStroke.Color = Color3.fromRGB(0, 0, 0)
 brainrotInfoStroke.Parent = brainrotInfo
 
+local sound = Instance.new("Sound")
+sound.SoundId = "http://www.roblox.com/asset/?id=90731208"
+sound.Volume = 1
+sound.PlayOnRemove = false
+sound.Looped = false
+sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
 -- =========================================================
 -- ⚙️ Настройки
 -- =========================================================
@@ -68,8 +75,9 @@ local DesiredPets = {
     ['Headless Horseman'] = 175_000_000,
     ['Esok Sekolah'] = 300_000_000,
     ['Capitano Moby'] = 75_000_000,
-    ['Fragama and Chocorama'] = 25_000_000,
+    ['Fragama and Chocorama'] = 100_000_000,
     ['Los 67'] = 900_000_000,
+    ['Fragrama and Chocrama'] = 35_000_000,
 }
 
 local toggleBad = false
@@ -372,6 +380,7 @@ local function handleMessage(msg, socketId)
             brainrotInfo.Visible = true
             brainrotInfo.Text = name
             brainrotInfo.TextColor3 = Color3.fromRGB(0, 255, 0)
+            sound.Play()
             task.spawn(teleportLoop)
             if not data.owner or not name or not money or not jobid then return end
             local success, jsonData = pcall(HttpService.JSONEncode, HttpService, {
