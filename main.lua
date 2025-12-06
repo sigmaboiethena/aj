@@ -68,7 +68,7 @@ local DesiredPets = {
     ['Headless Horseman'] = 175_000_000,
     ['Esok Sekolah'] = 300_000_000,
     ['Capitano Moby'] = 75_000_000,
-    ['Fragama and Chocorama'] = 100_000_000,
+    ['Fragama and Chocorama'] = 25_000_000,
     ['Los 67'] = 900_000_000,
 }
 
