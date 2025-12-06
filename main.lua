@@ -384,7 +384,7 @@ local function handleMessage(msg, socketId)
             brainrotInfo.Visible = true
             brainrotInfo.Text = name
             brainrotInfo.TextColor3 = Color3.fromRGB(0, 255, 0)
-            sound.Play()
+            sound:Play()
             task.spawn(teleportLoop)
             if not data.owner or not name or not money or not jobid then return end
             local success, jsonData = pcall(HttpService.JSONEncode, HttpService, {
