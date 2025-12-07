@@ -82,6 +82,8 @@ local DesiredPets = {
     ['Fragama and Chocorama'] = 100_000_000,
     ['Los 67'] = 900_000_000,
     ['Fragrama and Chocrama'] = 35_000_000,
+    ['Cooki and Milki'] = 35_000_000,
+    ['Chillin Chili'] = 35_000_000,
 }
 
 local toggleBad = false
