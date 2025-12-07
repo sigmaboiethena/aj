@@ -85,6 +85,7 @@ local DesiredPets = {
     ['Cooki and Milki'] = 35_000_000,
     ['Chillin Chili'] = 35_000_000,
     ['Lavadorito Spinito'] = 35_000_000,
+    ['Mieteteira Bicicleteira'] = 400_000_000,
 }
 
 local toggleBad = false
