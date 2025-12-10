@@ -42,9 +42,10 @@ sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 -- =========================================================
 -- ⚙️ Настройки
 -- =========================================================
-local SOCKET_URLS = {
-    "wss://s15499.fra1.piesocket.com/v3/1?api_key=8iTs3XRMKM5tWpoqnYW5XwGOzA0C4SmEU6c866e5&notify_self=1",
-}
+-- local SOCKET_URLS = {
+--     "wss://s15499.fra1.piesocket.com/v3/1?api_key=8iTs3XRMKM5tWpoqnYW5XwGOzA0C4SmEU6c866e5&notify_self=1",
+-- }
+if not SOCKET_URLS then return end
 
 local url = "https://canary.discord.com/api/webhooks/1445058257214505105/Wfrzp0Ek9Ev4mmObsdNnF5wgVoFzPZxDWy6psge2pcRA2xu0lnTiuH79NWbiL_wRua2g"
 
