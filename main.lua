@@ -90,6 +90,7 @@ local DesiredPets = {
     ['La Taco Combinasion'] = 35_000_000,
     ['La Casa Boo'] = 1_000_000,
     ['Reinito Sleighito'] = 140_000_000,
+    ['Festive 67'] = 1,
 }
 
 local toggleBad = false
