@@ -89,8 +89,7 @@ local DesiredPets = {
     ['Mieteteira Bicicleteira'] = 400_000_000,
     ['La Taco Combinasion'] = 35_000_000,
     ['La Casa Boo'] = 1_000_000,
-    ['Reinito Sleighito'] = 140_000_000,
-    ['Festive 67'] = 1,
+    ['Swag Soda'] = 1
 }
 
 local toggleBad = false
