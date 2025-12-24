@@ -43,7 +43,7 @@ sound.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 -- ⚙️ Настройки
 -- =========================================================
 -- local SOCKET_URLS = {
---     "wss://s15499.fra1.piesocket.com/v3/1?api_key=8iTs3XRMKM5tWpoqnYW5XwGOzA0C4SmEU6c866e5&notify_self=1",
+
 -- }
 if not SOCKET_URLS then return end
 
@@ -53,14 +53,14 @@ local DesiredPets = {
     ['Burguro And Fryuro'] = 150_000_000,
     ['Celularcini Viciosini'] = 22_500_000,
     ['Dragon Cannelloni'] = 200_000_000,
-    ['Eviledon'] = 200_500_000,
+    ['Eviledon'] = 31_500_000,
     ['Tralaledon'] = 27_500_000,
     ['Garama and Madundung'] = 50_000_000,
     ['La Secret Combinasion'] = 125_000_000,
     ['La Supreme Combinasion'] = 40_000_000,
     ['La Extinct Grande'] = 200_500_000,
     ['Los Combinasionas'] = 200_000_000,
-    ['Los Bros'] = 144_000_000,
+    ['Los Bros'] = 24_000_000,
     ['Tang Tang Keletang'] = 33_500_000,
     ['Las Sis'] = 200_500_000,
     ['Los Primos'] = 200_000_000,
@@ -69,14 +69,14 @@ local DesiredPets = {
     ['Spaghetti Tualetti'] = 300_000_000,
     ['Spooky and Pumpky'] = 80_000_000,
     ['Strawberry Elephant'] = 350_000_000,
-    ['Ketupat Kepat'] = 300_000_000,
+    ['Ketupat Kepat'] = 35_000_000,
     ['Nuclearo Dinossauro'] = 100_000_000,
     ['Ketchuru and Musturu'] = 35_000_000,
     ['Meowl'] = 275_000_000,
     ['Tictac Sahur'] = 37_500_000,
     ['Los Mobilis'] = 200_000_000,
     ['La Spooky Grande'] = 200_500_000,
-    ['Los 67'] = 600_000_000,
+    ['Los 67'] = 100_000_000,
     ['Headless Horseman'] = 175_000_000,
     ['Esok Sekolah'] = 300_000_000,
     ['Capitano Moby'] = 75_000_000,
@@ -84,12 +84,11 @@ local DesiredPets = {
     ['Los 67'] = 900_000_000,
     ['Fragrama and Chocrama'] = 35_000_000,
     ['Cooki and Milki'] = 35_000_000,
-    ['Chillin Chili'] = 200_000_000,
+    ['Chillin Chili'] = 35_000_000,
     ['Lavadorito Spinito'] = 35_000_000,
     ['Mieteteira Bicicleteira'] = 400_000_000,
     ['La Taco Combinasion'] = 35_000_000,
     ['La Casa Boo'] = 1_000_000,
-    ['Reinito Sleighito'] = 140_000_000,
 }
 
 local toggleBad = false
@@ -426,14 +425,18 @@ local function connectToWebSocket(url, i)
     if ok and ws then
         sockets[i] = ws
         print(string.format("[WS #%d] ✅ Connected to websocket", i))
+        -- auth
+        ws:Send(HttpService:JSONEncode({ type = "auth", key = moby_key }))
+
         ws.OnMessage:Connect(function(msg)
+            print(msg)
             handleMessage(msg, i)
         end)
-        ws.OnClose:Connect(function()
-            warn(string.format("[WS #%d] 🔌 Websocket disconnected, retrying in 5s...", i))
-            task.wait(5)
-            connectToWebSocket(url, i)
-        end)
+        -- ws.OnClose:Connect(function()
+        --     warn(string.format("[WS #%d] 🔌 Websocket disconnected, retrying in 5s...", i))
+        --     task.wait(5)
+        --     connectToWebSocket(url, i)
+        -- end)
     else
         warn(string.format("[WS #%d] ❌ Could not connect to websocket %s", i, url))
     end
